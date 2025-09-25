@@ -35,6 +35,7 @@ crashlytics = "3.0.6"
 datastore = "1.1.7"
 espressoCore = "3.7.0"
 firebaseBom = "34.4.0"
+genaiPrompt = "1.0.0-alpha1"
 googleServices = "4.4.4"
 googleOss = "17.3.0"
 googleOssPlugin = "0.10.9"
@@ -78,7 +79,6 @@ wearCompose = "1.5.0"
 wearComposeTooling = "1.4.1"
 wearRemoteInteractions = "1.1.0"
 window = "1.5.0"
-aiEdge = "0.0.1-exp02"
 lifecycleProcess = "2.9.4"
 mlkitCommon = "18.11.0"
 mlkitSegmentation = "16.0.0-beta1"
@@ -148,6 +148,7 @@ firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "fir
 firebase-config = { module = "com.google.firebase:firebase-config" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 firebase-ai = { module = "com.google.firebase:firebase-ai" }
+genai-prompt = { module = "com.google.mlkit:genai-prompt", version.ref = "genaiPrompt" }
 guava = { module = "com.google.guava:guava", version.ref = "guava" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltAndroid" }
 hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hiltAndroid" }
@@ -173,7 +174,6 @@ ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref =
 androidx-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
 androidx-benchmark-macro-junit4 = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "benchmarkMacroJunit4" }
 androidx-profileinstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version.ref = "profileinstaller" }
-ai-edge = { group = "com.google.ai.edge.aicore", name = "aicore", version.ref = "aiEdge" }
 google-oss-licenses = { group = "com.google.android.gms", name = "play-services-oss-licenses", version.ref = "googleOss" }
 google-oss-licenses-plugin = { group = "com.google.android.gms", name = "oss-licenses-plugin", version.ref = "googleOssPlugin" }
 androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "lifecycleProcess" }
