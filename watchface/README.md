@@ -20,5 +20,25 @@ example, using `pngquant` on all images, to help keep the watch face size to a m
 ## Packaging the watch face
 
 To package the watch face, the [Pack](https://github.com/google/pack) is used. This is a native
-library, so the pre-builts are provided in `jniLibs`. A script is also included for building these
-fresh, but that should not be necessary.
+library, so the pre-builts are provided in `jniLibs`.
+
+## Building native libraries
+
+A script is also included for building these fresh, but that is generally not necessary when
+building Androidify.
+
+However, if you do wish to build these, the follow these steps in order to run the script:
+
+1. [Install][install-ndk] the Android NDK.
+2. [Install][install-rust] Rust and Cargo.
+3. Make a copy of `Androidify/watchface/pack-java/.cargo-example` as
+    `Androidify/watchface/pack-java/.cargo`.
+4. Open `Androidify/watchface/pack-java/.cargo/config.toml`.
+5. Adjust all the `linker` and `ar` paths, replacing `/Your/Path/To` with the paths to your NDK
+   binaries. Note that each linker must support API level 26 and above, to match the Androidify
+   `minSdk`. For example: `armv7a-linux-androideabi26-clang`.
+6. Execute the `./provide-libraries-to-androidify-project.sh` script. This will build the native
+   libraries and copy them to the `jniLibs` directory.
+
+[install-ndk]: https://developer.android.com/studio/projects/install-ndk#default-version
+[install-rust]: https://rust-lang.org/tools/install/

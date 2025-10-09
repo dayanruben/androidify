@@ -1,0 +1,16 @@
+# Real watch
+[target.armv7-linux-androideabi]
+linker = "/Your/Path/To/Android/sdk/ndk/29.0.13846066/toolchains/llvm/prebuilt/darwin-x86_64/bin/armv7a-linux-androideabi26-clang"
+ar = "/Your/Path/To/Android/sdk/ndk/29.0.13846066/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ar"
+# Emulator
+[target.i686-linux-android]
+linker = "/Your/Path/To/Android/sdk/ndk/29.0.13846066/toolchains/llvm/prebuilt/darwin-x86_64/bin/i686-linux-android26-clang"
+ar = "/Your/Path/To/Android/sdk/ndk/29.0.13846066/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ar"
+# Emulator on Apple Silicon MacBooks
+[target.aarch64-linux-android]
+linker = "/Your/Path/To/Android/sdk/ndk/29.0.13846066/toolchains/llvm/prebuilt/darwin-x86_64/bin/aarch64-linux-android26-clang"
+ar = "/Your/Path/To/Android/sdk/ndk/29.0.13846066/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ar"
+# Emulator (64-bit x86_64)
+[target.x86_64-linux-android]
+linker = "/Your/Path/To/Android/sdk/ndk/29.0.13846066/toolchains/llvm/prebuilt/darwin-x86_64/bin/x86_64-linux-android26-clang"
+ar = "/Your/Path/To/Android/sdk/ndk/29.0.13846066/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ar"
