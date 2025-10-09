@@ -31,13 +31,13 @@ However, if you do wish to build these, follow these steps in order to run the s
 
 1. [Install][install-ndk] the Android NDK.
 2. [Install][install-rust] Rust and Cargo.
-3. Make a copy of `Androidify/watchface/pack-java/.cargo-example` as
-    `Androidify/watchface/pack-java/.cargo`.
-4. Open `Androidify/watchface/pack-java/.cargo/config.toml`.
-5. Adjust all the `linker` and `ar` paths, replacing `/Your/Path/To` with the paths to your NDK
-   binaries. Note that each linker must support API level 26 and above, to match the Androidify
-   `minSdk`. For example: `armv7a-linux-androideabi26-clang`.
-6. Execute the `./provide-libraries-to-androidify-project.sh` script. This will build the native
+3. Make a copy of `watchface/pack-java/.cargo-example` as
+    `watchface/pack-java/.cargo`.
+4. Open `watchface/pack-java/.cargo/config.toml`.
+5. Adjust all the `linker` and `ar` paths, replacing `<NDK_PATH>` with the absolute path to your
+   Android NDK installation. Note that each linker must support API level 26 and above, to match
+   the Androidify `minSdk`. For example: `armv7a-linux-androideabi26-clang`.
+6. Execute the `watchface/provide-libraries-to-androidify-project.sh` script. This will build the native
    libraries and copy them to the `jniLibs` directory.
 
 [install-ndk]: https://developer.android.com/studio/projects/install-ndk#default-version
