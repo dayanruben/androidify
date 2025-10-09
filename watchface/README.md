@@ -27,7 +27,7 @@ library, so the pre-builts are provided in `jniLibs`.
 A script is also included for building these fresh, but that is generally not necessary when
 building Androidify.
 
-However, if you do wish to build these, the follow these steps in order to run the script:
+However, if you do wish to build these, follow these steps in order to run the script:
 
 1. [Install][install-ndk] the Android NDK.
 2. [Install][install-rust] Rust and Cargo.
