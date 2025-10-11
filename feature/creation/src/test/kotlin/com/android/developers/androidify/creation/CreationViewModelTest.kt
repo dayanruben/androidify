@@ -116,7 +116,7 @@ class CreationViewModelTest {
     }
 
     @Test
-    fun selectedPromptOptionChanged_updatesUiState() = runTest {
+    fun onSelectedPromptOptionChanged_updatesUiState() = runTest {
         viewModel.onSelectedPromptOptionChanged(PromptType.TEXT)
 
         assertEquals(PromptType.TEXT, viewModel.uiState.value.selectedPromptOption)
@@ -130,7 +130,7 @@ class CreationViewModelTest {
     }
 
     @Test
-    fun startClicked_GenerateBotFromPhoto() = runTest {
+    fun onStartClicked_GenerateBotFromPhoto() = runTest {
         val screenStateValues = mutableListOf<ScreenState>()
         backgroundScope.launch(UnconfinedTestDispatcher()) {
             viewModel.uiState.collect {
@@ -146,7 +146,7 @@ class CreationViewModelTest {
     }
 
     @Test
-    fun startClicked_GenerateBotFromPhoto_NoPhotoSelected() = runTest {
+    fun onStartClicked_GenerateBotFromPhoto_NoPhotoSelected() = runTest {
         val values = mutableListOf<SnackbarHostState>()
 
         backgroundScope.launch(UnconfinedTestDispatcher()) {
@@ -165,7 +165,7 @@ class CreationViewModelTest {
     }
 
     @Test
-    fun startClicked_GenerateBotFromPrompt_TextEmpty() = runTest {
+    fun onStartClicked_GenerateBotFromPrompt_TextEmpty() = runTest {
         val values = mutableListOf<SnackbarHostState>()
 
         backgroundScope.launch(UnconfinedTestDispatcher()) {
@@ -193,7 +193,7 @@ class CreationViewModelTest {
     }
 
     @Test
-    fun startClicked_GenerateBotFromPrompt() = runTest {
+    fun onStartClicked_GenerateBotFromPrompt() = runTest {
         val screenStateValues = mutableListOf<ScreenState>()
         backgroundScope.launch(UnconfinedTestDispatcher()) {
             viewModel.uiState.collect {
@@ -210,7 +210,7 @@ class CreationViewModelTest {
     }
 
     @Test
-    fun startClicked_NoInternet_DisplaysError() = runTest {
+    fun onStartClicked_NoInternet_DisplaysError() = runTest {
         val values = mutableListOf<SnackbarHostState>()
         backgroundScope.launch(UnconfinedTestDispatcher()) {
             viewModel.snackbarHostState.collect {
