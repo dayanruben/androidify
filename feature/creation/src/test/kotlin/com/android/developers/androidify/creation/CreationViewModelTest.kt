@@ -116,7 +116,7 @@ class CreationViewModelTest {
     }
 
     @Test
-    fun onSelectedPromptOptionChanged_updatesUiState() = runTest {
+    fun selectedPromptOptionChanged_updatesUiState() = runTest {
         viewModel.onSelectedPromptOptionChanged(PromptType.TEXT)
 
         assertEquals(PromptType.TEXT, viewModel.uiState.value.selectedPromptOption)
@@ -140,7 +140,7 @@ class CreationViewModelTest {
 
         viewModel.onImageSelected(Uri.parse("content://test/image.jpg"))
         viewModel.onSelectedPromptOptionChanged(PromptType.PHOTO)
-        viewModel.startClicked()
+        viewModel.onStartClicked()
         assertEquals(ScreenState.EDIT, viewModel.uiState.value.screenState)
         assertNotNull(viewModel.uiState.value.resultBitmapUri)
     }
@@ -156,7 +156,7 @@ class CreationViewModelTest {
         }
 
         viewModel.onSelectedPromptOptionChanged(PromptType.PHOTO)
-        viewModel.startClicked()
+        viewModel.onStartClicked()
         assertEquals(ScreenState.EDIT, viewModel.uiState.value.screenState)
         assertNotNull(
             "Choose an image or use a prompt instead.",
@@ -182,7 +182,7 @@ class CreationViewModelTest {
         imageGenerationRepository.exceptionToThrow = InsufficientInformationException()
 
         viewModel.onSelectedPromptOptionChanged(PromptType.TEXT)
-        viewModel.startClicked()
+        viewModel.onStartClicked()
 
         assertEquals(ScreenState.EDIT, screenStateValues[1])
         assertEquals(
@@ -204,7 +204,7 @@ class CreationViewModelTest {
         viewModel.uiState.value.descriptionText.edit {
             "testing input description"
         }
-        viewModel.startClicked()
+        viewModel.onStartClicked()
         assertEquals(ScreenState.EDIT, viewModel.uiState.value.screenState)
         assertNotNull(viewModel.uiState.value.resultBitmapUri)
     }
@@ -218,7 +218,7 @@ class CreationViewModelTest {
             }
         }
         internetConnectivityManager.internetAvailable = false
-        viewModel.startClicked()
+        viewModel.onStartClicked()
         advanceUntilIdle()
         assertEquals(ScreenState.EDIT, viewModel.uiState.value.screenState)
         assertEquals(
