@@ -55,16 +55,12 @@ private fun shimSharedTransitionScope(original: SharedTransitionScope): SharedTr
         override val isTransitionActive: Boolean
             get() = false
 
-        override fun Modifier.skipToLookaheadSize(enabled: () -> Boolean): Modifier {
-            return this
-        }
+        override fun Modifier.skipToLookaheadSize(enabled: () -> Boolean) = this
 
         override fun Modifier.renderInSharedTransitionScopeOverlay(
             zIndexInOverlay: Float,
             renderInOverlay: () -> Boolean,
-        ): Modifier {
-            return this
-        }
+        ) = this
 
         override fun Modifier.sharedElement(
             sharedContentState: SharedTransitionScope.SharedContentState,
@@ -74,9 +70,7 @@ private fun shimSharedTransitionScope(original: SharedTransitionScope): SharedTr
             renderInOverlayDuringTransition: Boolean,
             zIndexInOverlay: Float,
             clipInOverlayDuringTransition: SharedTransitionScope.OverlayClip,
-        ): Modifier {
-            return this
-        }
+        ) = this
 
         override fun Modifier.sharedBounds(
             sharedContentState: SharedTransitionScope.SharedContentState,
@@ -89,9 +83,7 @@ private fun shimSharedTransitionScope(original: SharedTransitionScope): SharedTr
             renderInOverlayDuringTransition: Boolean,
             zIndexInOverlay: Float,
             clipInOverlayDuringTransition: SharedTransitionScope.OverlayClip,
-        ): Modifier {
-            return this
-        }
+        ) = this
 
         override fun Modifier.sharedElementWithCallerManagedVisibility(
             sharedContentState: SharedTransitionScope.SharedContentState,
@@ -101,11 +93,7 @@ private fun shimSharedTransitionScope(original: SharedTransitionScope): SharedTr
             renderInOverlayDuringTransition: Boolean,
             zIndexInOverlay: Float,
             clipInOverlayDuringTransition: SharedTransitionScope.OverlayClip,
-        ): Modifier {
-            return this
-        }
-
-
+        ) = this
 
         override fun OverlayClip(clipShape: Shape): SharedTransitionScope.OverlayClip =
             original.OverlayClip(clipShape)
