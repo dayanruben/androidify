@@ -64,7 +64,7 @@ import com.android.developers.androidify.wear.common.WatchFaceInstallationStatus
 fun WatchFaceModalSheet(
     connectedWatch: ConnectedWatch,
     onWatchFaceInstallClick: (String) -> Unit,
-    onAndroidifyInstallClick: () -> Unit,
+    onAndroidifyInstallClick: suspend () -> Boolean,
     installationStatus: WatchFaceInstallationStatus,
     sheetState: SheetState,
     watchFaceSelectionState: WatchFaceSelectionState,
@@ -246,7 +246,7 @@ private fun WatchFaceModalSheetPreview() {
             onLoad = {},
             onDismiss = {},
             onWatchFaceInstallClick = {},
-            onAndroidifyInstallClick = {},
+            onAndroidifyInstallClick = { true },
             sheetState = sheetState,
         )
     }

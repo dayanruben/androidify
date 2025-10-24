@@ -76,7 +76,7 @@ interface WatchFaceInstallationRepository {
 
     suspend fun prepareForTransfer()
 
-    suspend fun installAndroidify(context: Context, nodeId: String)
+    suspend fun installAndroidify(nodeId: String)
 }
 
 class WatchFaceInstallationRepositoryImpl @Inject constructor(
@@ -141,7 +141,7 @@ class WatchFaceInstallationRepositoryImpl @Inject constructor(
         manualStatusUpdates.tryEmit(WatchFaceInstallationStatus.Preparing)
     }
 
-    override suspend fun installAndroidify(context: Context, nodeId: String) {
+    override suspend fun installAndroidify(nodeId: String) {
         val backgroundExecutor = Dispatchers.IO.asExecutor()
         val remoteActivityHelper = RemoteActivityHelper(context, backgroundExecutor)
 

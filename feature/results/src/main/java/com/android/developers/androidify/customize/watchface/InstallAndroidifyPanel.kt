@@ -30,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,10 +41,11 @@ import androidx.compose.ui.unit.dp
 import com.android.developers.androidify.results.R
 import com.android.developers.androidify.theme.AndroidifyTheme
 import com.android.developers.androidify.watchface.WatchFaceAsset
+import kotlinx.coroutines.launch
 
 @Composable
 fun InstallAndroidifyPanel(
-    onInstallClick: () -> Unit,
+    onInstallClick: suspend () -> Boolean,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -86,14 +88,19 @@ fun InstallAndroidifyPanel(
             contentColor = MaterialTheme.colorScheme.surface,
             containerColor = MaterialTheme.colorScheme.onSurface,
         )
+        val scope = rememberCoroutineScope()
         WatchFacePanelButton(
             modifier = modifier.padding(horizontal = 16.dp),
             buttonText = buttonText,
             iconResId = R.drawable.watch_arrow_24,
             onClick = {
                 if (!isPlayLaunched) {
-                    isPlayLaunched = true
-                    onInstallClick()
+                    scope.launch {
+                        val launchResult = onInstallClick()
+                        if (launchResult) {
+                            isPlayLaunched = true
+                        }
+                    }
                 }
             },
             colors = if (isPlayLaunched) {
@@ -111,6 +118,6 @@ fun InstallAndroidifyPanel(
 @Composable
 private fun InstallAndroidifyPanelPreview() {
     AndroidifyTheme {
-        InstallAndroidifyPanel({})
+        InstallAndroidifyPanel({ true })
     }
 }

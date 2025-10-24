@@ -368,13 +368,17 @@ class CustomizeExportViewModel @AssistedInject constructor(
         }
     }
 
-    fun installAndroidifyOnWatch() {
-        viewModelScope.launch {
+    suspend fun launchPlayInstallOnWatch(): Boolean {
+        try {
             val watch = state.value.connectedWatch
             watch?.let {
                 watchfaceInstallationRepository.installAndroidify(application.applicationContext, it.nodeId)
             }
+            return true
+        } catch (e: Exception) {
+            Timber.e(e, "Failed to open Play Store on watch")
         }
+        return false
     }
 
     fun installWatchFace() {
