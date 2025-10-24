@@ -101,7 +101,7 @@ fun InstallAndroidifyPanel(
             } else {
                 installColors
             },
-            isSending = isPlayLaunched,
+            isInProgress = isPlayLaunched,
         )
     }
 }
