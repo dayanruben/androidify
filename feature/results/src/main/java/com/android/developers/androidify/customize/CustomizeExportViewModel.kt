@@ -372,7 +372,7 @@ class CustomizeExportViewModel @AssistedInject constructor(
         try {
             val watch = state.value.connectedWatch
             watch?.let {
-                watchfaceInstallationRepository.installAndroidify(application.applicationContext, it.nodeId)
+                watchfaceInstallationRepository.installAndroidify(it.nodeId)
             }
             return true
         } catch (e: Exception) {
