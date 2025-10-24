@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.validator.push.android) {
         exclude(group = "com.google.guava", "listenablefuture")
     }
+    implementation(libs.androidx.wear.remote.interactions)
     implementation(libs.bcpkix.jdk18on)
     implementation(libs.play.services.wearable)
     implementation(libs.kotlinx.coroutines.play.services)
