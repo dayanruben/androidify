@@ -15,6 +15,7 @@
  */
 package com.android.developers.androidify.watchface.transfer
 
+import android.content.Context
 import android.graphics.Bitmap
 import com.android.developers.androidify.watchface.WatchFaceAsset
 import com.android.developers.androidify.wear.common.ConnectedWatch
@@ -48,4 +49,6 @@ class EmptyWatchFaceInstallationRepositoryImpl @Inject constructor() : WatchFace
     override suspend fun resetInstallationStatus() { }
 
     override suspend fun prepareForTransfer() { }
+
+    override suspend fun installAndroidify(context: Context, nodeId: String) { }
 }

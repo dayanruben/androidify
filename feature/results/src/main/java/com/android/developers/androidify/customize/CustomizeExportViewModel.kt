@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.application
 import androidx.lifecycle.viewModelScope
 import com.android.developers.androidify.RemoteConfigDataSource
 import com.android.developers.androidify.customize.watchface.WatchFaceSelectionState
@@ -364,6 +365,15 @@ class CustomizeExportViewModel @AssistedInject constructor(
                     selectedWatchFace = watchFace,
                 ),
             )
+        }
+    }
+
+    fun installAndroidifyOnWatch() {
+        viewModelScope.launch {
+            val watch = state.value.connectedWatch
+            watch?.let {
+                watchfaceInstallationRepository.installAndroidify(application.applicationContext, it.nodeId)
+            }
         }
     }
 
