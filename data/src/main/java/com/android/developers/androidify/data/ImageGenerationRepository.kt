@@ -56,19 +56,16 @@ internal class ImageGenerationRepositoryImpl @Inject constructor(
         firebaseAiDataSource.validatePromptHasEnoughInformation(inputPrompt)
 
     private suspend fun validateImageIsFullPerson(file: File): ValidatedImage {
+        val bitmap = BitmapFactory.decodeFile(file.absolutePath)
         val validateImageResult = if (remoteConfigDataSource.useGeminiNano()) {
-            geminiNanoDataSource.validateImageHasEnoughInformation(BitmapFactory.decodeFile(file.absolutePath))
+            geminiNanoDataSource.validateImageHasEnoughInformation(bitmap)
         } else {
             null
         }
 
         // If validating image with Nano is not successful, fallback to using Firebase AI
         return validateImageResult
-            ?: firebaseAiDataSource.validateImageHasEnoughInformation(
-                BitmapFactory.decodeFile(
-                    file.absolutePath,
-                ),
-            )
+            ?: firebaseAiDataSource.validateImageHasEnoughInformation(bitmap)
     }
 
     @Throws(InsufficientInformationException::class)
@@ -138,7 +135,8 @@ internal class ImageGenerationRepositoryImpl @Inject constructor(
     }
 
     override suspend fun saveImageToExternalStorage(imageBitmap: Bitmap): Uri {
-        val cacheFile = localFileProvider.createCacheFile("androidify_image_result_${UUID.randomUUID()}.png")
+        val cacheFile =
+            localFileProvider.createCacheFile("androidify_image_result_${UUID.randomUUID()}.png")
         localFileProvider.saveBitmapToFile(imageBitmap, cacheFile)
         return localFileProvider.saveToSharedStorage(cacheFile, cacheFile.name, "image/png")
     }
