@@ -70,10 +70,6 @@ dependencies {
     }
     ksp(libs.hilt.compiler)
 
-    implementation(libs.ai.edge) {
-        exclude(group = "com.google.guava")
-    }
-
     implementation(libs.androidx.xr.compose)
     implementation(projects.core.xr)
 

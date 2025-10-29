@@ -78,10 +78,6 @@ class CreationViewModel @AssistedInject constructor(
 
     init {
         onImageSelected(originalImageUrl)
-        viewModelScope.launch {
-            imageGenerationRepository.initialize()
-            textGenerationRepository.initialize()
-        }
     }
 
     fun onImageSelected(uri: Uri?) {

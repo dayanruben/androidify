@@ -31,8 +31,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 interface ImageGenerationRepository {
-    suspend fun initialize()
     suspend fun generateFromDescription(description: String, skinTone: String): Bitmap
+    suspend fun getDescriptionFromImage(file: File): ValidatedDescription
     suspend fun generateFromImage(file: File, skinTone: String): Bitmap
     suspend fun saveImage(imageBitmap: Bitmap): Uri
     suspend fun saveImageToExternalStorage(imageBitmap: Bitmap): Uri
@@ -52,20 +52,24 @@ internal class ImageGenerationRepositoryImpl @Inject constructor(
     private val localSegmentationDataSource: LocalSegmentationDataSource,
 ) : ImageGenerationRepository {
 
-    override suspend fun initialize() {
-        Timber.d("Initializing")
-        geminiNanoDataSource.initialize()
-    }
-
     private suspend fun validatePromptHasEnoughInformation(inputPrompt: String): ValidatedDescription =
         firebaseAiDataSource.validatePromptHasEnoughInformation(inputPrompt)
 
-    private suspend fun validateImageIsFullPerson(file: File): ValidatedImage =
-        firebaseAiDataSource.validateImageHasEnoughInformation(
-            BitmapFactory.decodeFile(
-                file.absolutePath,
-            ),
-        )
+    private suspend fun validateImageIsFullPerson(file: File): ValidatedImage {
+        val validateImageResult = if (remoteConfigDataSource.useGeminiNano()) {
+            geminiNanoDataSource.validateImageHasEnoughInformation(BitmapFactory.decodeFile(file.absolutePath))
+        } else {
+            null
+        }
+
+        // If validating image with Nano is not successful, fallback to using Firebase AI
+        return validateImageResult
+            ?: firebaseAiDataSource.validateImageHasEnoughInformation(
+                BitmapFactory.decodeFile(
+                    file.absolutePath,
+                ),
+            )
+    }
 
     @Throws(InsufficientInformationException::class)
     override suspend fun generateFromDescription(
@@ -84,19 +88,40 @@ internal class ImageGenerationRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun generateFromImage(
-        file: File,
-        skinTone: String,
-    ): Bitmap {
+    override suspend fun getDescriptionFromImage(file: File): ValidatedDescription {
         checkInternetConnection()
         val validatedImage = validateImageIsFullPerson(file)
         if (!validatedImage.success) {
             throw ImageValidationException(validatedImage.errorMessage?.toImageValidationError())
         }
 
-        val imageDescription = firebaseAiDataSource.generateDescriptivePromptFromImage(
-            BitmapFactory.decodeFile(file.absolutePath),
-        )
+        var imageDescription = if (remoteConfigDataSource.useGeminiNano()) {
+            geminiNanoDataSource.generateDescriptivePromptFromImage(
+                BitmapFactory.decodeFile(file.absolutePath),
+            )
+        } else {
+            null
+        }
+
+        Timber.d("nano generated image desc ${imageDescription?.userDescription}")
+
+        // If we're not getting a valid result from Nano, try with Firebase AI Logic
+        if (imageDescription?.success != true) {
+            Timber.d("generating image description with Firebase AI Logic")
+            imageDescription = firebaseAiDataSource.generateDescriptivePromptFromImage(
+                BitmapFactory.decodeFile(file.absolutePath),
+            )
+        }
+
+        return imageDescription
+    }
+
+    override suspend fun generateFromImage(
+        file: File,
+        skinTone: String,
+    ): Bitmap {
+        val imageDescription = getDescriptionFromImage(file)
+
         if (!imageDescription.success || imageDescription.userDescription == null) {
             throw ImageDescriptionFailedGenerationException()
         }
@@ -134,7 +159,7 @@ internal class ImageGenerationRepositoryImpl @Inject constructor(
 
     override suspend fun addBackgroundToBot(image: Bitmap, backgroundPrompt: String): Bitmap {
         val backgroundBotInstructions = remoteConfigDataSource.getBotBackgroundInstructionPrompt() +
-            "\"" + backgroundPrompt + "\""
+                "\"" + backgroundPrompt + "\""
         return firebaseAiDataSource.generateImageWithEdit(image, backgroundBotInstructions)
     }
 
