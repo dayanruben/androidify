@@ -15,6 +15,7 @@
  */
 package com.android.developers.androidify.data
 
+import com.android.developers.testing.data.TestGeminiNanoDownloader
 import com.android.developers.testing.data.TestGeminiNanoGenerationDataSource
 import com.android.developers.testing.network.TestFirebaseAiDataSource
 import com.android.developers.testing.network.TestRemoteConfigDataSource
@@ -29,7 +30,8 @@ class TextGenerationRepositoryImplTest {
     fun `Initial prompt generation`() = runTest {
         val output = "prompt"
         val remoteConfigDataSource = TestRemoteConfigDataSource(true)
-        val geminiNanoDataSource = TestGeminiNanoGenerationDataSource(output)
+        val geminiNanoDataSource = TestGeminiNanoGenerationDataSource(output,
+            TestGeminiNanoDownloader(false))
         val firebaseAiDataSource = TestFirebaseAiDataSource(emptyList())
         val repository =
             TextGenerationRepositoryImpl(
@@ -48,7 +50,8 @@ class TextGenerationRepositoryImplTest {
         val output = "prompt"
         val prompts = listOf("prompt1", "prompt2")
         val remoteConfigDataSource = TestRemoteConfigDataSource(false)
-        val geminiNanoDataSource = TestGeminiNanoGenerationDataSource(output)
+        val geminiNanoDataSource = TestGeminiNanoGenerationDataSource(output,
+            TestGeminiNanoDownloader(false))
         val firebaseAiDataSource = TestFirebaseAiDataSource(prompts)
         val repository =
             TextGenerationRepositoryImpl(
@@ -69,7 +72,8 @@ class TextGenerationRepositoryImplTest {
         // list is returned.
         val prompts = listOf("prompt1", "prompt2")
         val remoteConfigDataSource = TestRemoteConfigDataSource(true)
-        val geminiNanoDataSource = TestGeminiNanoGenerationDataSource(null)
+        val geminiNanoDataSource = TestGeminiNanoGenerationDataSource(null,
+            TestGeminiNanoDownloader(false))
         val firebaseAiDataSource = TestFirebaseAiDataSource(prompts)
         val repository =
             TextGenerationRepositoryImpl(
@@ -92,7 +96,8 @@ class TextGenerationRepositoryImplTest {
         // prompt in the list
         val prompts = listOf("prompt1", "prompt2", "prompt3")
         val remoteConfigDataSource = TestRemoteConfigDataSource(true)
-        val geminiNanoDataSource = TestGeminiNanoGenerationDataSource(null)
+        val geminiNanoDataSource = TestGeminiNanoGenerationDataSource(null,
+            TestGeminiNanoDownloader(false))
         val firebaseAiDataSource = TestFirebaseAiDataSource(prompts)
         val repository =
             TextGenerationRepositoryImpl(
@@ -115,7 +120,8 @@ class TextGenerationRepositoryImplTest {
         // result, the function falls back to `firebaseAiDataSource.generatePrompt()`.
         val prompts = listOf("prompt1", "prompt2", "prompt3")
         val remoteConfigDataSource = TestRemoteConfigDataSource(true)
-        val geminiNanoDataSource = TestGeminiNanoGenerationDataSource(null)
+        val geminiNanoDataSource = TestGeminiNanoGenerationDataSource(null,
+            TestGeminiNanoDownloader(true))
         val firebaseAiDataSource = TestFirebaseAiDataSource(prompts)
         val repository =
             TextGenerationRepositoryImpl(
@@ -134,7 +140,8 @@ class TextGenerationRepositoryImplTest {
         // `firebaseAiDataSource` return empty or null results,
         // `generatePrompts()` returns null.
         val remoteConfigDataSource = TestRemoteConfigDataSource(true)
-        val geminiNanoDataSource = TestGeminiNanoGenerationDataSource(null)
+        val geminiNanoDataSource = TestGeminiNanoGenerationDataSource(null,
+            TestGeminiNanoDownloader(false))
         val firebaseAiDataSource = TestFirebaseAiDataSource(emptyList())
         val repository =
             TextGenerationRepositoryImpl(

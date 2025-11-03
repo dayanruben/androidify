@@ -47,6 +47,7 @@ dependencies {
     implementation(projects.core.network)
     implementation(projects.core.util)
 
+    implementation(libs.androidx.app.startup)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.retrofit)
     implementation(libs.timber)
@@ -56,9 +57,14 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.okhttp)
     implementation(libs.retrofit.kotlin.serialization)
-    implementation(libs.ai.edge) {
-        exclude(group = "com.google.guava")
-    }
+    implementation(libs.genai.prompt)
 
     ksp(libs.hilt.compiler)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.hilt.android.testing)
+    testImplementation(libs.robolectric)
+    testImplementation(projects.core.testing)
+    testImplementation(kotlin("test"))
 }
