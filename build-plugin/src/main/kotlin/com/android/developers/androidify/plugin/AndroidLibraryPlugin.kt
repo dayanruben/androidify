@@ -17,25 +17,15 @@ class AndroidLibraryPlugin : Plugin<Project> {
             apply(plugin = "org.jetbrains.kotlin.android")
 
             extensions.configure<LibraryExtension> {
-                compileSdk = getVersionByName("compileSdk").toInt()
-                defaultConfig {
-                    minSdk = getVersionByName("minSdk").toInt()
-                }
                 compileOptions {
                     val javaVersion = JavaVersion.toVersion(getVersionByName("javaVersion"))
                     sourceCompatibility = javaVersion
                     targetCompatibility = javaVersion
                 }
-                testOptions {
-                    targetSdk = getVersionByName("targetSdk").toInt()
-                }
-                lint {
-                    targetSdk = getVersionByName("targetSdk").toInt()
-                }
             }
             extensions.configure<KotlinAndroidProjectExtension> {
                 compilerOptions {
-                    jvmTarget = JvmTarget.fromTarget(getVersionByName("jvmTarget"))
+                    jvmTarget = JvmTarget.fromTarget(getVersionByName("javaVersion"))
                 }
             }
         }

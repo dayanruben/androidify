@@ -27,7 +27,7 @@ plugins {
 android {
     namespace = "com.android.developers.androidify"
     defaultConfig {
-        minSdk = libs.versions.wearMinSdk.get().toInt()
+        minSdk = 36
         applicationId = "com.android.developers.androidify"
         // Ensure Wear OS app has its own version space
         versionCode = libs.versions.appVersionWearOffset.get().toInt() + libs.versions.appVersionCode.get().toInt()

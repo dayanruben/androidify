@@ -18,10 +18,7 @@ class AndroidApplicationPlugin : Plugin<Project> {
             apply(plugin = "org.jetbrains.kotlin.plugin.compose")
 
             extensions.configure<ApplicationExtension> {
-                compileSdk = getVersionByName("compileSdk").toInt()
                 defaultConfig {
-                    minSdk = getVersionByName("minSdk").toInt()
-                    targetSdk = getVersionByName("targetSdk").toInt()
                     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 }
                 compileOptions {
@@ -35,7 +32,7 @@ class AndroidApplicationPlugin : Plugin<Project> {
             }
             extensions.configure<KotlinAndroidProjectExtension> {
                 compilerOptions {
-                    jvmTarget = JvmTarget.fromTarget(getVersionByName("jvmTarget"))
+                    jvmTarget = JvmTarget.fromTarget(getVersionByName("javaVersion"))
                 }
             }
         }
