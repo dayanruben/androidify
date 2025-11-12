@@ -29,6 +29,9 @@ dependencyResolutionManagement {
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 rootProject.name = "Androidify"
+
+includeBuild("build-plugin")
+
 include(":app")
 include(":feature:camera")
 include(":feature:creation")
