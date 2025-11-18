@@ -16,9 +16,7 @@
 import java.io.ByteArrayOutputStream
 import java.util.regex.Pattern
 import org.gradle.api.attributes.Attribute
-import java.lang.RuntimeException
-
-evaluationDependsOn(":wear:watchface")
+import com.android.build.api.attributes.BuildTypeAttr
 
 plugins {
     alias(libs.plugins.android.application)
@@ -69,36 +67,26 @@ configurations {
         isCanBeResolved = true
     }
 
-    create("watchfaceApkDebug"){
-        isCanBeResolved = true
-        isCanBeConsumed = false
+    listOf("debug", "release").forEach { buildType ->
+        create("watchfaceApk${buildType.replaceFirstChar { it.uppercase() }}") {
+            isCanBeResolved = true
+            isCanBeConsumed = false
 
-        attributes {
-            attribute(
-                Attribute.of(com.android.build.api.attributes.BuildTypeAttr::class.java),
-                objects.named(com.android.build.api.attributes.BuildTypeAttr::class.java, "debug")
-            )
-            attribute(Attribute.of("artifactType", String::class.java), "apk")
-        }
-    }
-
-    create("watchfaceApkRelease") {
-        isCanBeResolved = true
-        isCanBeConsumed = false
-
-        attributes {
-            attribute(
-                Attribute.of(com.android.build.api.attributes.BuildTypeAttr::class.java),
-                objects.named(com.android.build.api.attributes.BuildTypeAttr::class.java, "release")
-            )
-            attribute(Attribute.of("artifactType", String::class.java), "apk")
+            attributes {
+                attribute(
+                    Attribute.of(BuildTypeAttr::class.java),
+                    objects.named(BuildTypeAttr::class.java, buildType)
+                )
+                attribute(Attribute.of("artifactType", String::class.java), "apk")
+            }
         }
     }
 }
 
 dependencies {
-    configurations.getByName("watchfaceApkDebug").dependencies.add(project(":wear:watchface"))
-    configurations.getByName("watchfaceApkRelease").dependencies.add(project(":wear:watchface"))
+    configurations.matching { it.name.startsWith("watchfaceApk") }.all {
+        dependencies.add(project(":wear:watchface"))
+    }
 
     implementation(projects.wear.common)
     implementation(platform(libs.androidx.compose.bom))
@@ -123,12 +111,7 @@ dependencies {
 
 androidComponents.onVariants { variant ->
     val capsVariant = variant.name.replaceFirstChar { it.uppercase() }
-
-    val watchfaceApkConfig = when (variant.name) {
-        "release" -> configurations.getByName("watchfaceApkRelease")
-        "debug" -> configurations.getByName("watchfaceApkDebug")
-        else -> throw RuntimeException("Cannot find watchface apk configuration")
-    }
+    val watchfaceApkConfig = configurations.getByName("watchfaceApk$capsVariant")
 
     val copyWatchfaceApkTask = tasks.register<Copy>("copyWatchface${capsVariant}ApkToAssets") {
         from(watchfaceApkConfig) {
@@ -146,7 +129,13 @@ androidComponents.onVariants { variant ->
     val tokenTask = tasks.register<ProcessFilesTask>("generateToken${capsVariant}Res") {
         val tokenFile =
             layout.buildDirectory.file("generated/wfTokenRes/${variant.name}/res/values/wf_token.xml")
-        inputFile.from(copyWatchfaceApkTask.map { it.outputs.files.singleFile })
+
+        apkDirectory.set(
+            layout.dir( copyWatchfaceApkTask.map {
+                it.destinationDir
+            })
+        )
+
         outputFile.set(tokenFile)
         cliToolClasspath.set(project.configurations["cliToolConfiguration"])
     }
@@ -159,8 +148,8 @@ androidComponents.onVariants { variant ->
 }
 
 abstract class ProcessFilesTask : DefaultTask() {
-    @get:InputFiles
-    abstract val inputFile: ConfigurableFileCollection
+    @get:InputDirectory
+    abstract val apkDirectory: DirectoryProperty
 
     @get:OutputFile
     abstract val outputFile: RegularFileProperty
@@ -174,8 +163,7 @@ abstract class ProcessFilesTask : DefaultTask() {
 
     @TaskAction
     fun taskAction() {
-        val apkDirectory = inputFile.singleFile
-        val apkFile = apkDirectory.resolve("default_watchface.apk")
+        val apkFile = apkDirectory.asFile.get().resolve("default_watchface.apk")
 
         val stdOut = ByteArrayOutputStream()
         val stdErr = ByteArrayOutputStream()
