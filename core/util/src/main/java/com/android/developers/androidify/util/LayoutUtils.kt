@@ -49,6 +49,12 @@ fun isHeightAtLeastMedium(): Boolean {
     return sizeClass.isHeightAtLeastBreakpoint(WindowSizeClass.HEIGHT_DP_MEDIUM_LOWER_BOUND)
 }
 
+@Composable
+fun isHorizontalWindow(): Boolean {
+    val sizeClass = calculateWindowSizeClass()
+    return sizeClass.minWidthDp >= sizeClass.minHeightDp
+}
+
 /***
  * This function is useful to limit the number of buttons when the window is too small to show
  * everything that should otherwise appear on the screen.
