@@ -329,7 +329,7 @@ private fun TableTopCameraLayout(
         Box(
             modifier = Modifier
                 .weight(1f)
-                .aspectRatio(1f),
+                .aspectRatio(9/16f),
         ) {
             viewfinder(Modifier)
             guide(Modifier.fillMaxSize())
@@ -381,7 +381,7 @@ private fun MediumHorizontalCameraLayout(
 
         Box(
             Modifier
-                .aspectRatio(3 / 4f)
+                .aspectRatio(9 / 16f)
                 .navigationBarsPadding(),
         ) {
             viewfinder(Modifier.fillMaxSize())
