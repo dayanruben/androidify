@@ -16,8 +16,7 @@
 package com.android.developers.androidify.creation
 
 import androidx.compose.runtime.Composable
-import com.android.developers.androidify.util.isHeightAtLeastMedium
-import com.android.developers.androidify.util.isWidthAtLeastMedium
+import com.android.developers.androidify.util.areBothWindowDimensionsAtLeastMedium
 import com.android.developers.androidify.xr.LocalSpatialCapabilities
 
 enum class EditScreenLayoutType {
@@ -30,7 +29,7 @@ enum class EditScreenLayoutType {
 fun calculateLayoutType(enableXr: Boolean = false): EditScreenLayoutType {
     return when {
         LocalSpatialCapabilities.current.isSpatialUiEnabled && enableXr -> EditScreenLayoutType.Spatial
-        isWidthAtLeastMedium() && isHeightAtLeastMedium() -> EditScreenLayoutType.Medium
+        areBothWindowDimensionsAtLeastMedium() -> EditScreenLayoutType.Medium
         else -> EditScreenLayoutType.Compact
     }
 }
