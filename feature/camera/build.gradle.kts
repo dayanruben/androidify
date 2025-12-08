@@ -69,5 +69,6 @@ dependencies {
     kspAndroidTest(libs.hilt.compiler)
 
     debugImplementation(libs.androidx.ui.test.manifest)
-    screenshotTestImplementation(libs.androidx.ui.tooling)
+    // Disable until it works with newer Gradle versions
+    // screenshotTestImplementation(libs.androidx.ui.tooling)
 }
