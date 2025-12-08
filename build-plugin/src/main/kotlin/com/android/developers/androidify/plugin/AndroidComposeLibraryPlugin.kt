@@ -11,14 +11,11 @@ class AndroidComposeLibraryPlugin : Plugin<Project> {
         with(project) {
             apply(plugin = "androidify.androidLibrary")
             apply(plugin = "org.jetbrains.kotlin.plugin.compose")
-            apply(plugin = "com.android.compose.screenshot")
-
             extensions.configure<LibraryExtension> {
                 defaultConfig {
                     testInstrumentationRunner = "com.android.developers.testing.AndroidifyTestRunner"
                 }
                 buildFeatures.compose = true
-                experimentalProperties["android.experimental.enableScreenshotTest"] = true
             }
         }
     }
