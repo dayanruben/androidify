@@ -14,41 +14,17 @@
  * limitations under the License.
  */
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.androidify.androidComposeLibrary)
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.hilt)
 }
 
 android {
     namespace = "com.android.developers.androidify.creation"
-    compileSdk = libs.versions.compileSdk.get().toInt()
-
-
-    defaultConfig {
-        minSdk = libs.versions.minSdk.get().toInt()
-        testInstrumentationRunner = "com.android.developers.testing.AndroidifyTestRunner"
-
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.toVersion(libs.versions.javaVersion.get())
-        targetCompatibility = JavaVersion.toVersion(libs.versions.javaVersion.get())
-    }
-    kotlinOptions {
-        jvmTarget = libs.versions.jvmTarget.get()
-    }
-    buildFeatures {
-        compose = true
-    }
-
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
-
         }
-        targetSdk = 36
     }
     // To avoid packaging conflicts when using bouncycastle
     packaging {

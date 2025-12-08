@@ -5,14 +5,10 @@ appVersionName = "1.3.0"
 appVersionWearOffset = "60000000"
 agp = "8.13.1"
 bcpkixJdk18on = "1.83"
-compileSdk = "36"
 core = "1.7.0"
 extensionsXr = "1.1.0"
 leakcanaryAndroid = "2.14"
-minSdk = "26"
 javaVersion = "17"
-jvmTarget = "17"
-wearMinSdk = "36"
 
 #dependencies
 accompanist = "0.37.3"
@@ -185,7 +181,14 @@ google-firebase-appcheck-debug = { group = "com.google.firebase", name = "fireba
 androidx-xr-compose = { group = "androidx.xr.compose", name="compose", version.ref = "xr-compose"}
 androidx-xr-extensions = { module = "com.android.extensions.xr:extensions-xr", version.ref = "extensionsXr" }
 
+# Dependencies of the included build-logic
+android-gradlePluginApi = { group = "com.android.tools.build", name = "gradle-api", version.ref = "agp" }
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+
 [plugins]
+androidify-androidLibrary = { id = "androidify.androidLibrary" }
+androidify-androidComposeLibrary = { id = "androidify.androidComposeLibrary" }
+androidify-androidApplication = { id = "androidify.androidApplication" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlytics" }
