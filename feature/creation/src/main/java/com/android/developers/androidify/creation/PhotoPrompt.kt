@@ -98,7 +98,7 @@ import com.android.developers.androidify.theme.components.SecondaryOutlinedButto
 import com.android.developers.androidify.theme.sharedBoundsRevealWithShapeMorph
 import com.android.developers.androidify.theme.sharedBoundsWithDefaults
 import com.android.developers.androidify.util.dashedRoundedRectBorder
-import com.android.developers.androidify.util.isHorizontalWindow
+import com.android.developers.androidify.util.shouldShowHorizontalPhotoPrompt
 import com.android.developers.androidify.creation.R as CreationR
 
 @Composable
@@ -171,7 +171,7 @@ private fun UploadEmptyState(
     onChooseImagePress: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    if (isHorizontalWindow()) {
+    if (shouldShowHorizontalPhotoPrompt()) {
         HorizontallyAlignedUploadEmptyState(
             onCameraPressed = onCameraPressed,
             onChooseImagePress = onChooseImagePress,

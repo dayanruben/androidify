@@ -50,10 +50,17 @@ fun areBothWindowDimensionsAtLeastMedium(): Boolean {
             sizeClass.isWidthAtLeastBreakpoint(WindowSizeClass.WIDTH_DP_MEDIUM_LOWER_BOUND)
 }
 
+/***
+ * This function is useful to understand if the window is too small to show the vertically stacked
+ * photo empty state. It should align items horizontally only if the window is horizontal and
+ * if the amount of vertical space is smaller than medium
+ */
 @Composable
-fun isHorizontalWindow(): Boolean {
+fun shouldShowHorizontalPhotoPrompt(): Boolean {
     val sizeClass = calculateWindowSizeClass()
-    return sizeClass.minWidthDp >= sizeClass.minHeightDp
+    val isHorizontalWindow = sizeClass.minWidthDp >= sizeClass.minHeightDp
+    val isHeightSmallerThanMedium = !sizeClass.isHeightAtLeastBreakpoint(WindowSizeClass.HEIGHT_DP_MEDIUM_LOWER_BOUND)
+    return isHorizontalWindow && isHeightSmallerThanMedium
 }
 
 /***
