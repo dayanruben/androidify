@@ -84,6 +84,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.graphics.shapes.RoundedPolygon
 import androidx.graphics.shapes.rectangle
+import androidx.window.core.layout.WindowSizeClass
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
@@ -97,8 +98,8 @@ import com.android.developers.androidify.theme.components.ScaleIndicationNodeFac
 import com.android.developers.androidify.theme.components.SecondaryOutlinedButton
 import com.android.developers.androidify.theme.sharedBoundsRevealWithShapeMorph
 import com.android.developers.androidify.theme.sharedBoundsWithDefaults
+import com.android.developers.androidify.util.calculateWindowSizeClass
 import com.android.developers.androidify.util.dashedRoundedRectBorder
-import com.android.developers.androidify.util.isHorizontalWindow
 import com.android.developers.androidify.creation.R as CreationR
 
 @Composable
@@ -171,7 +172,7 @@ private fun UploadEmptyState(
     onChooseImagePress: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    if (isHorizontalWindow()) {
+    if (shouldShowHorizontalPhotoPrompt()) {
         HorizontallyAlignedUploadEmptyState(
             onCameraPressed = onCameraPressed,
             onChooseImagePress = onChooseImagePress,
@@ -184,6 +185,19 @@ private fun UploadEmptyState(
             modifier = modifier,
         )
     }
+}
+
+/***
+ * This function is useful to understand if the window is too small to show the vertically stacked
+ * photo empty state. It should align items horizontally only if the window is horizontal and
+ * if the amount of vertical space is smaller than medium
+ */
+@Composable
+fun shouldShowHorizontalPhotoPrompt(): Boolean {
+    val sizeClass = calculateWindowSizeClass()
+    val isHorizontalWindow = sizeClass.minWidthDp >= sizeClass.minHeightDp
+    val isHeightSmallerThanMedium = !sizeClass.isHeightAtLeastBreakpoint(WindowSizeClass.HEIGHT_DP_MEDIUM_LOWER_BOUND)
+    return isHorizontalWindow && isHeightSmallerThanMedium
 }
 
 @Composable
