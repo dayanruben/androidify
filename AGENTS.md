@@ -19,7 +19,7 @@
 The project follows a modularized architecture:
 
 - **`/app`**: The main Android application module. Connects features and configures the app.
-- **`/core`**: Core libraries and utilities shared across modules (e.g., `core/network`, `core/data`).
+- **`/core`**: Core libraries and utilities shared across modules (e.g., `core/network`, `core/util`).
 - **`/feature`**: Feature-specific modules (e.g., `feature/home`, `feature/creation`).
 - **`/data`**: Data layer repositories and datasources.
 - **`/wear`**: Wear OS specific module.
