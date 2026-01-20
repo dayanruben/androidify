@@ -70,3 +70,4 @@ This project uses **Spotless** for code formatting.
 2. **Modularization**: Respect the module boundaries. Core modules should not depend on features.
 3. **Spotless**: Always run `spotlessApply` on modified files if possible, or ensure code aligns with the project's style guide.
 4. **AI Features**: When working on AI features, refer to the Firebase AI Logic SDK documentation and established patterns in the codebase.
+5. **Large Screen**: The app is a Tier 1 example of Large screen guidelines, meaning its fully optimized for different screen sizes. When performing any changes, ensure it works across the specrtrum of Android devices. 
