@@ -63,7 +63,7 @@ dependencies {
     testImplementation(libs.hilt.android.testing)
     testImplementation(libs.robolectric)
     testImplementation(projects.core.testing)
-    testImplementation(kotlin("test"))
+    testImplementation(libs.kotlin.test)
 
     // Android Instrumented Tests
     androidTestImplementation(platform(libs.androidx.compose.bom))
