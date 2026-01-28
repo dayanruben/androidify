@@ -16,7 +16,6 @@
 package com.android.developers.androidify.data
 
 import android.graphics.Bitmap
-import androidx.annotation.VisibleForTesting
 import com.android.developers.androidify.RemoteConfigDataSource
 import com.android.developers.androidify.model.ImageValidationError
 import com.android.developers.androidify.model.ValidatedDescription
@@ -48,8 +47,7 @@ internal class GeminiNanoGenerationDataSourceImpl @Inject constructor(
     override suspend fun generatePrompt(prompt: String): String? {
         if (!downloader.isModelDownloaded()) return null
         val response = downloader.generativeModel.generateContent(
-            generateContentRequest(TextPart(prompt))
-            {
+            generateContentRequest(TextPart(prompt)) {
                 temperature = 0.2f
                 topK = 16
                 candidateCount = 1

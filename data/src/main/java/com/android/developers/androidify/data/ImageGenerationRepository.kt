@@ -157,7 +157,7 @@ internal class ImageGenerationRepositoryImpl @Inject constructor(
 
     override suspend fun addBackgroundToBot(image: Bitmap, backgroundPrompt: String): Bitmap {
         val backgroundBotInstructions = remoteConfigDataSource.getBotBackgroundInstructionPrompt() +
-                "\"" + backgroundPrompt + "\""
+            "\"" + backgroundPrompt + "\""
         return firebaseAiDataSource.generateImageWithEdit(image, backgroundBotInstructions)
     }
 

@@ -329,7 +329,7 @@ private fun TableTopCameraLayout(
         Box(
             modifier = Modifier
                 .weight(1f)
-                .aspectRatio(9/16f),
+                .aspectRatio(9 / 16f),
         ) {
             viewfinder(Modifier)
             guide(Modifier.fillMaxSize())
