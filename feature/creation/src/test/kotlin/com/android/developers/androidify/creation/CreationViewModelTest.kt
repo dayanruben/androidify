@@ -96,7 +96,7 @@ class CreationViewModelTest {
             viewModel.uiState.value.screenState,
         )
         assertEquals(false, viewModel.uiState.value.promptGenerationInProgress)
-        assertEquals( null, viewModel.uiState.value.imageUri)
+        assertEquals(null, viewModel.uiState.value.imageUri)
     }
 
     @Test

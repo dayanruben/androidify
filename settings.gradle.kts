@@ -27,9 +27,10 @@ dependencyResolutionManagement {
 }
 
 plugins {
-    val agpVersion = File("gradle/libs.versions.toml").readLines().first {
-        it.startsWith("agp =")
-    }.split("\"")[1]
+    val agpVersion = buildscript.sourceFile!!.parentFile.resolve("gradle/libs.versions.toml")
+        .readLines().first {
+            it.startsWith("agp =")
+        }.split("\"")[1]
     id("com.android.settings") version agpVersion
 }
 
