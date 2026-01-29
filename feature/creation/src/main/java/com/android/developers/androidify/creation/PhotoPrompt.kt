@@ -139,15 +139,18 @@ fun PhotoPrompt(
                     cornerRadius = 28.dp,
                 )
                 .run {
-                    if (externalAppCallback == null) this
-                    else dragAndDropTarget(
-                        shouldStartDragAndDrop = { event ->
-                            dropBehaviourFactory.shouldStartDragAndDrop(
-                                event,
-                            )
-                        },
-                        target = externalAppCallback,
-                    )
+                    if (externalAppCallback == null) {
+                        this
+                    } else {
+                        dragAndDropTarget(
+                            shouldStartDragAndDrop = { event ->
+                                dropBehaviourFactory.shouldStartDragAndDrop(
+                                    event,
+                                )
+                            },
+                            target = externalAppCallback,
+                        )
+                    }
                 }
                 .fillMaxSize()
                 .padding(2.dp),

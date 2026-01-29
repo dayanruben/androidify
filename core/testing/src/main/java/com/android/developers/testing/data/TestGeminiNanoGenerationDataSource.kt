@@ -23,7 +23,7 @@ import com.android.developers.androidify.model.ValidatedImage
 
 class TestGeminiNanoGenerationDataSource(
     val promptOutput: String?,
-    val geminiNanoDownloader: GeminiNanoDownloader
+    val geminiNanoDownloader: GeminiNanoDownloader,
 ) : GeminiNanoGenerationDataSource {
 
     override suspend fun generatePrompt(prompt: String): String? {

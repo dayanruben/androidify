@@ -41,7 +41,7 @@ class GeminiNanoDownloaderInitializer : Initializer<Unit> {
     override fun create(context: Context) {
         val hiltEntryPoint = EntryPointAccessors.fromApplication(
             context,
-            GeminiNanoDownloaderInitializerEntryPoint::class.java
+            GeminiNanoDownloaderInitializerEntryPoint::class.java,
         )
         val remoteConfigDataSource = hiltEntryPoint.remoteConfigDataSource()
         if (remoteConfigDataSource.useGeminiNano()) {
